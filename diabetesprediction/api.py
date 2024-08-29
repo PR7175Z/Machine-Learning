@@ -3,8 +3,11 @@ from pydantic import BaseModel, conlist
 import pickle
 from sklearn.preprocessing import StandardScaler
 import numpy as np
+from flask_cors import CORS
+
 
 app = FastAPI()
+CORS(app)
 
 with open('diabetes_prediction.pkl', 'rb') as f:
     loaded_model = pickle.load(f)
