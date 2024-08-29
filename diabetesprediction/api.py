@@ -1,6 +1,8 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, conlist
 import pickle
+from sklearn.preprocessing import StandardScaler
+import numpy as np
 
 app = FastAPI()
 
@@ -13,7 +15,11 @@ class feature(BaseModel):
 @app.post('/predict')
 def predict(data: feature):
     try:
-        prediction = loaded_model.predict([data.features])
+        scaler = StandardScaler()
+
+        features = np.array(data.features).reshape(1, -1)
+        features_reshape = scaler.fit_transform(features)
+        prediction = loaded_model.predict(features_reshape)
         return (f'Prediction : {int(prediction)}')
     except Exception as e:
         return HTTPException(status_code = 500, detail = str(e))
