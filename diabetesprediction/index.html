@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Diabetes Level Prediction</title>
+    <style>
+        input.fullwidth{
+            display: block;
+        }
+        input{
+            margin: 10px 0px;
+        }
+    </style>
+</head>
+<body>
+    <div class="title-wrap">
+        <h1>Diabetes Level Prediction</h1>
+    </div>
+    <form id="predictionform">
+        <input type="number" placeholder="Age" name="age" class="fullwidth">
+        <label>Sex:</label>
+        <label><input type="radio" value="1" name="sex">Male</label>
+        <label><input type="radio" value="2" name="sex">Female</label>
+        <input type="number" placeholder="BMI" name="bmi" class="fullwidth">
+        <input type="number" placeholder="Blood Pressure" name="bp" class="fullwidth">
+        <input type="number" placeholder="S1" name="s1" class="fullwidth">
+        <input type="number" placeholder="s2" name="s2" class="fullwidth">
+        <input type="number" placeholder="s3" name="s3" class="fullwidth">
+        <input type="number" placeholder="s4" name="s4" class="fullwidth">
+        <input type="number" placeholder="s5" name="s5" class="fullwidth">
+        <input type="number" placeholder="s6" name="s6" class="fullwidth">
+        <input type="submit" value="Submit">
+    </form>
+    <script>
+        const apiUrl = 'http://127.0.0.1:8000/predict';
+
+        async function apiresponse(){
+            const response = await fetch(
+                apiUrl,
+                {
+                    method: 'POST',
+                    data:{
+                        'features': [59, 2,32.1, 101,157, 93.2, 38, 4, 4.8598,87 ]
+                    }
+                }
+            )
+            
+            const data = await response.json()
+
+            console.log(data);
+        }
+
+        apiresponse()
+    </script>
+</body>
+</html>
