@@ -15,10 +15,13 @@ app.add_middleware(
 )
 
 model = joblib.load('models/toxiccommentclassifier.pkl')
+vectorizer = joblib.load('models/vectoizer.pkl')
 
 @app.post('/predict')
-def predict():
+def predict(inputdata):
     try:
-        return 'Hello'
+        inputdatavect = vectorizer(inputdata)
+        prediction = model.predict(inputdatavect)
+        return prediction
     except Exception as e:
         return HTTPException(status_code = 500, detail = str(e))
