@@ -3,7 +3,6 @@ import joblib
 from fastapi.middleware.cors import CORSMiddleware
 import numpy as np
 
-
 app = FastAPI()
 
 app.add_middleware(
@@ -14,8 +13,8 @@ app.add_middleware(
     allow_headers=["*"], 
 )
 
-model = joblib.load('models/toxiccommentclassifier.pkl')
-vectorizer = joblib.load('models/vectoizer.pkl')
+model = joblib.load('models/toxiccommentclaasifier.pkl')
+vectorizer = joblib.load('models/vectorizer.pkl')
 
 @app.post('/predict')
 def predict(inputdata):
