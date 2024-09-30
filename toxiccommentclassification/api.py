@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException
 import joblib
 from pydantic import BaseModel, conlist
 from fastapi.middleware.cors import CORSMiddleware
+from sklearn.feature_extraction.text import CountVectorizer
 import numpy as np
 
 app = FastAPI()
@@ -15,15 +16,15 @@ app.add_middleware(
 )
 
 model = joblib.load('models/toxiccommentclaasifier.pkl')
-vectorizer = joblib.load('models/vectorizer.pkl')
-
-class feature(BaseModel):
-    features:str
+vectorizer = CountVectorizer(stop_words='english')
+class InputData(BaseModel):
+    comment: str
 
 @app.post('/predict')
-def predict(inputdata: feature):
+def predict(inputdata: InputData):
     try:
-        inputdatavect = vectorizer(inputdata.feature)
+        print(inputdata.comment)
+        inputdatavect = vectorizer.fit_transform(inputdata.comment)
         prediction = model.predict(inputdatavect)
         return prediction
     except Exception as e:
