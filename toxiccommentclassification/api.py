@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 import joblib
+from pydantic import BaseModel, conlist
 from fastapi.middleware.cors import CORSMiddleware
 import numpy as np
 
@@ -16,10 +17,13 @@ app.add_middleware(
 model = joblib.load('models/toxiccommentclaasifier.pkl')
 vectorizer = joblib.load('models/vectorizer.pkl')
 
+class feature(BaseModel):
+    features:str
+
 @app.post('/predict')
-def predict(inputdata):
+def predict(inputdata: feature):
     try:
-        inputdatavect = vectorizer(inputdata)
+        inputdatavect = vectorizer(inputdata.feature)
         prediction = model.predict(inputdatavect)
         return prediction
     except Exception as e:
