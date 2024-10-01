@@ -16,16 +16,18 @@ app.add_middleware(
 )
 
 model = joblib.load('models/toxiccommentclaasifier.pkl')
-vectorizer = CountVectorizer(stop_words='english')
+vectorize = joblib.load('models/vectorizer.pkl')
+
 class InputData(BaseModel):
     comment: str
 
 @app.post('/predict')
 def predict(inputdata: InputData):
     try:
-        print(inputdata.comment)
-        inputdatavect = vectorizer.fit_transform(inputdata.comment)
+        cmt = [inputdata.comment]
+        print(cmt)
+        inputdatavect = vectorize.transform(cmt)
         prediction = model.predict(inputdatavect)
-        return prediction
+        return {"pred": int(prediction)}
     except Exception as e:
         return HTTPException(status_code = 500, detail = str(e))
