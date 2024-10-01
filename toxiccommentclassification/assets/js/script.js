@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', ()=>{
-    comment = "It was a bad movie";
-    // comment = "It was a great movie";
+    // comment = "It was a bad movie";
+    comment = "It was a great movie";
 
     async function getResponse(comment) {
         const api = 'http://127.0.0.1:8080/predict';
