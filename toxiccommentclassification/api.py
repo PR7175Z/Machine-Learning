@@ -25,7 +25,6 @@ class InputData(BaseModel):
 def predict(inputdata: InputData):
     try:
         cmt = [inputdata.comment]
-        print(cmt)
         inputdatavect = vectorize.transform(cmt)
         prediction = model.predict(inputdatavect)
         return {"pred": int(prediction)}
