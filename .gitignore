@@ -11,3 +11,5 @@
 /toxiccommentclassification/env/
 /digitrecognizer/env/
 /dogbreedidentification/env/
+/dogbreedidentification/data/
+/dogbreedidentification/processeddata/
